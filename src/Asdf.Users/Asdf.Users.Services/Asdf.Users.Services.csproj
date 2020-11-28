@@ -2,6 +2,7 @@
 
   <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Asdf.UserDomain.Services</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Asdf.UserDomain.Models\Asdf.UserDomain.Models.csproj" />
+    <ProjectReference Include="..\Asdf.Users.Models\Asdf.Users.Models.csproj" />
   </ItemGroup>
 
 </Project>
