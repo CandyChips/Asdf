@@ -1,0 +1,34 @@
+﻿@page "/user/table"
+
+<h1>Users</h1>
+<div class="form-group">
+    <a class="btn btn-success" href="user/create"><i class="oi oi-plus"></i>Создать</a>
+</div>
+<br>
+@if (_users == null)
+{
+    <p><em>@_requestStatus</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Имя</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in _users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+}

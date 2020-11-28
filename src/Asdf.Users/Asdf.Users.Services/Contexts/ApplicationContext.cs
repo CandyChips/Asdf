@@ -1,4 +1,7 @@
-﻿using Asdf.Users.Models.Entities;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Asdf.Users.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +29,15 @@ namespace Asdf.Users.Services.Contexts
             Users.Load();
             Roles.Load();
             Friendships.Load();
+        }
+    }
+
+    public class DataInitializer
+    {
+        public static async Task InitializeRolesAsync(RoleManager<Role> roleManager)
+        {
+            await roleManager.CreateAsync(new Role() { Name = "Администратор" });
+            await roleManager.CreateAsync(new Role() { Name = "Пользователь" });
         }
     }
 }

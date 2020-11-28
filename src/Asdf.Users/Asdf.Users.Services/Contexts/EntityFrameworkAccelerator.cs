@@ -6,7 +6,12 @@ namespace Asdf.Users.Services.Contexts
     public class EntityFrameworkAccelerator : IDataAccelerator
     {
         private ApplicationContext _context;
-        public ApplicationContext Context { get => _context; protected set => _context = value; }
+
+        public ApplicationContext Context
+        {
+            get => _context;
+            private set => _context = value;
+        }
 
         public EntityFrameworkAccelerator(ApplicationContext context)
         {

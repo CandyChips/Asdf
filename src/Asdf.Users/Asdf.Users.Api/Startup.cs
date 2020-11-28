@@ -58,6 +58,16 @@ namespace Asdf.Users.Api
             
             services.AddMediatR(assembly);
             
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyHeader());
+            });
+            
             var mapperConfig = new MapperConfiguration(mc =>
                 { mc.AddProfile(new MappingProfile()); }).CreateMapper();
             services.AddSingleton(mapperConfig);
@@ -71,6 +81,7 @@ namespace Asdf.Users.Api
                 app.UseDeveloperExceptionPage();
             }
             app.UseRouting();
+            app.UseCors("CorsPolicy");
             app.UseStaticFiles();
             app.UseEndpoints(endpoints => 
             {

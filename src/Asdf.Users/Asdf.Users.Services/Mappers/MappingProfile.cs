@@ -13,6 +13,12 @@ namespace Asdf.UserDomain.Services.Mappers
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Id, source => source.MapFrom(source => Guid.Parse(source.Id)))
                 .ForMember(dest => dest.Name, source => source.MapFrom(source => source.Name));
+
+            CreateMap<Role, RoleDto>()
+                .ForMember(dest => dest.Id, source => source.MapFrom(source => Guid.Parse(source.Id)))
+                .ForMember(dest => dest.Name, source => source.MapFrom(source => source.Name));
+
+            
         }
     }
 }

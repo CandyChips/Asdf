@@ -54,6 +54,28 @@ namespace Asdf.Users.Api.Controllers
 
         [HttpGet] 
         [AllowAnonymous]
+        [Route("GetAllRoles")]
+        [ProducesResponseType(typeof(List<RoleDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetAllRolesQuery()
+        {
+            try
+            {
+                var query = new GetAllRolesQuery();
+                var result = (await this._mediator.Send(query)).Select(c => 
+                    c.MapTo<RoleDto>()).ToList();
+                return result.Any() ? (IActionResult) Ok(result) : NotFound();
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
+
+        [HttpGet] 
+        [AllowAnonymous]
         [Route("GetUser/Id={id}")]
         [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -73,10 +95,9 @@ namespace Asdf.Users.Api.Controllers
             }
         }
         
-        
         [HttpPost] 
         [AllowAnonymous]
-        [Route("CreateArticle")]
+        [Route("CreateUser")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateArticleCommand(
@@ -89,8 +110,51 @@ namespace Asdf.Users.Api.Controllers
                 var result = await this._mediator.Send(command);
                 return result == false ? (IActionResult) BadRequest() : Ok();
             }
-            catch
+            catch(Exception ex)
             {
+                this._logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
+        
+        [HttpPut] 
+        [AllowAnonymous]
+        [Route("UpdateUsersName")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateArticleCommand(
+            [FromBody]UplateUsersNameCommand command)
+        {
+            try
+            {
+                var result = await this._mediator.Send(command);
+                return result == false ? (IActionResult) BadRequest() : Ok();
+            }
+            catch(Exception ex)
+            {
+                this._logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
+        
+        [HttpPost] 
+        [AllowAnonymous]
+        [Route("CreateRole")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateRoleCommand(
+            [FromBody]CreateRoleCommand command, 
+            [FromHeader(Name = "x-requestid")] Guid requestId)
+        {
+            try
+            {
+                command.Id = requestId;
+                var result = await this._mediator.Send(command);
+                return result == false ? (IActionResult) BadRequest() : Ok();
+            }
+            catch(Exception ex)
+            {
+                this._logger.LogError(ex.ToString());
                 return BadRequest();
             }
         }
