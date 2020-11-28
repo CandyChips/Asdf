@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Asdf.UserDomain.Services.Mappers;
+using Asdf.Users.Agregates;
 using Asdf.Users.Services.Requests.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,14 +29,16 @@ namespace Asdf.Users.Api.Controllers
 
         [HttpGet] 
         [Route("GetAllUserNames")]
-        [ProducesResponseType(typeof(List<string>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<UserDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetClientNames(GetAllUsersQuery request)
+        public async Task<IActionResult> GetClientNames()
         {
             try
             {
-                var result = (await this._mediator.Send(request)).Select(c => c.UserName).ToList();
+                var query = new GetAllUsersQuery();
+                var result = (await this._mediator.Send(query)).Select(c => 
+                    c.Id).ToList();
                 return result.Any() ? (IActionResult) Ok(result) : NotFound();
             }
             catch (Exception ex)

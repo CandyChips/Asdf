@@ -14,5 +14,7 @@ namespace Asdf.Users.Models.Entities
             get { return base.Id; }
             set { base.Id = value; }
         }
+        [Required]
+        public bool Deleted { get; set; }
     }
 }

@@ -8,10 +8,8 @@ namespace Asdf.Users.Models.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        [Required]
         [ForeignKey("CreatorId")]
         public User Creator { get; set; }
-        [Required]
         [ForeignKey("FriendId")]
         public User Friend { get; set; }
         [Required]

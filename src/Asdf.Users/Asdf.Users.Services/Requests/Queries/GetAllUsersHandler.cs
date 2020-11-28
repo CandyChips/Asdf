@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Asdf.Users.Models.Entities;
@@ -14,12 +13,15 @@ namespace Asdf.Users.Services.Requests.Queries
     {
         private readonly IUserRepository _userService;
 
-        public GetAllUsersHandler(IUserRepository userService)
+        public GetAllUsersHandler(
+            IUserRepository userService)
         {
             _userService = userService;
         }
 
-        public async Task<List<User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<List<User>> Handle(
+            GetAllUsersQuery request,
+            CancellationToken cancellationToken)
         {
             return await this._userService.GetAllUsers().ToListAsync(cancellationToken: cancellationToken);
         }
