@@ -33,6 +33,15 @@ namespace Asdf.Users.Api
             services.AddDbContext<ApplicationContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("AsdfUsersDB")));
             
+            services.AddIdentity<User, Role>(opts => {
+                    opts.Password.RequiredLength = 6;
+                    opts.Password.RequireNonAlphanumeric = false;
+                    opts.Password.RequireLowercase = false;
+                    opts.Password.RequireUppercase = false;
+                    opts.Password.RequireDigit = false;
+                    opts.SignIn.RequireConfirmedEmail = true;
+                }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+
             services.AddSwaggerGen();
             
             services.AddControllers();
@@ -44,7 +53,15 @@ namespace Asdf.Users.Api
             services.AddTransient<IUserRepository, UserRepository>();
             
             var assembly = AppDomain.CurrentDomain.Load("Asdf.Users.Services");
+            
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionPipeLineBehaviour<,>));
+            
             services.AddMediatR(assembly);
+            
+            var mapperConfig = new MapperConfiguration(mc =>
+                { mc.AddProfile(new MappingProfile()); }).CreateMapper();
+            services.AddSingleton(mapperConfig);
+            MappingPipe.Mapper = services.BuildServiceProvider().GetService<IMapper>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
