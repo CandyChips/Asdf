@@ -1,0 +1,48 @@
+﻿@page "/user/edit/{id}"
+
+<h3>Редактирование пользователя</h3>
+<EditForm Model="@User" OnValidSubmit="@CreateUser">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Имя :</label>
+        <div>
+            <InputText @bind-Value="@User.Name" />
+            <ValidationMessage For="@(() => User.Name)" />
+        </div>
+    </div>
+</EditForm>
+<EditForm Model="@User" OnValidSubmit="@CreateUser">
+    <DataAnnotationsValidator />>
+    <div class="form-group ">
+        <div>
+            <label>Почта :</label>
+            <div>
+                <InputText @bind-Value="@User.Email" />
+                <ValidationMessage For="@(() => User.Email)" />
+            </div>
+        </div>
+    </div>
+</EditForm>
+<EditForm Model="@User" OnValidSubmit="@CreateUser">
+    <DataAnnotationsValidator />>
+    <div class="form-group ">
+        <div>
+            <label>Номер телефона :</label>
+            <div>
+                <InputText @bind-Value="@User.Phone" />
+                <ValidationMessage For="@(() => User.Phone)" />
+            </div>
+        </div>
+    </div>
+</EditForm>
+    <div class="form-group ">
+        <div>
+            <label>Роль :</label>
+            <div>
+                @User.
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        Добавить
+    </button>

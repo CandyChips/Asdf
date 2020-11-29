@@ -4,5 +4,6 @@ using MediatR;
 
 namespace Asdf.Users.Services.Requests.Queries
 {
-    public class GetAllUsersQuery : IRequest<List<User>> {}
+    public class GetAllUsersQuery 
+        : IRequest<List<User>> {}
 }

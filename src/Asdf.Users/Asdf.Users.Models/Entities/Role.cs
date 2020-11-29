@@ -5,14 +5,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Asdf.Users.Models.Entities
 {
-    public class Role : IdentityRole<Guid>
+    public class Role : IdentityRole
     {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public override Guid Id
-        {
-            get { return base.Id; }
-            set { base.Id = value; }
-        }
+        [Required]
+        public bool Deleted { get; set; }
     }
 }

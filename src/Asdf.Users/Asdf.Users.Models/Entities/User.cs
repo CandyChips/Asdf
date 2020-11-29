@@ -9,5 +9,7 @@ namespace Asdf.Users.Models.Entities
     {
         [Required]
         public bool Deleted { get; set; }
+        [Required]
+        public string Name { get; set; }
     }
 }
