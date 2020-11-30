@@ -16,6 +16,7 @@ else
             <tr>
                 <th>Id</th>
                 <th>Имя</th>
+                <th>Редактирование</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,9 @@ else
                 <tr>
                     <td>@user.Id</td>
                     <td>@user.Name</td>
+                    <td>
+                        <a class="btn btn-success" href="user/edit/@user.Id"><i class="oi oi-plus"></i>Редактировать</a>
+                    </td>
                 </tr>
             }
         </tbody>

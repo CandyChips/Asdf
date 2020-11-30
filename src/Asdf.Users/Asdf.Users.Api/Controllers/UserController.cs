@@ -80,7 +80,7 @@ namespace Asdf.Users.Api.Controllers
         [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetClientNames(Guid id)
+        public async Task<IActionResult> GetUserByIdQuery(Guid id)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Asdf.Users.Api.Controllers
         [Route("CreateUser")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CreateArticleCommand(
+        public async Task<IActionResult> CreateUserCommand(
             [FromBody]CreateUserCommand command, 
             [FromHeader(Name = "x-requestid")] Guid requestId)
         {
@@ -122,8 +122,28 @@ namespace Asdf.Users.Api.Controllers
         [Route("UpdateUsersName")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CreateArticleCommand(
+        public async Task<IActionResult> UplateUsersNameCommand(
             [FromBody]UplateUsersNameCommand command)
+        {
+            try
+            {
+                var result = await this._mediator.Send(command);
+                return result == false ? (IActionResult) BadRequest() : Ok();
+            }
+            catch(Exception ex)
+            {
+                this._logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
+        
+        [HttpPut] 
+        [AllowAnonymous]
+        [Route("UplateUsersEmail")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> UplateUsersEmailCommand(
+            [FromBody]UplateUsersEmailCommand command)
         {
             try
             {

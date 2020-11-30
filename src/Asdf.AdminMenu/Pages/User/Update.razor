@@ -1,48 +1,39 @@
-﻿@page "/user/edit/{id}"
+﻿@page "/user/edit/{UserId}"
 
-<h3>Редактирование пользователя</h3>
-<EditForm Model="@User" OnValidSubmit="@CreateUser">
-    <DataAnnotationsValidator />
-    <div class="form-group">
-        <label>Имя :</label>
-        <div>
-            <InputText @bind-Value="@User.Name" />
-            <ValidationMessage For="@(() => User.Name)" />
-        </div>
-    </div>
-</EditForm>
-<EditForm Model="@User" OnValidSubmit="@CreateUser">
-    <DataAnnotationsValidator />>
-    <div class="form-group ">
-        <div>
-            <label>Почта :</label>
+<h3>Редактирование пользователя @UserId.ToString()</h3>
+@if (_requestStatus == "")
+{
+    <br>
+    <EditForm Model="@_editUsersName" OnValidSubmit="@UpdateUsersName">
+        <DataAnnotationsValidator />
+        <div class="form-group" style="display: ruby">
+            <label>Имя :</label>
             <div>
-                <InputText @bind-Value="@User.Email" />
-                <ValidationMessage For="@(() => User.Email)" />
+                <InputText @bind-Value="@_editUsersName.Name" />
+                <ValidationMessage For="@(() => _editUsersName.Name)" />
             </div>
+            <button type="submit" class="btn btn-success">
+                Добавить
+            </button>
         </div>
-    </div>
-</EditForm>
-<EditForm Model="@User" OnValidSubmit="@CreateUser">
-    <DataAnnotationsValidator />>
-    <div class="form-group ">
-        <div>
-            <label>Номер телефона :</label>
+    </EditForm>
+    <br>
+    <EditForm Model="@_editUsersEmail" OnValidSubmit="@UpdateUsersEmail">
+        <DataAnnotationsValidator />
+        <div class="form-group" style="display: ruby">
+            <label>Имя :</label>
             <div>
-                <InputText @bind-Value="@User.Phone" />
-                <ValidationMessage For="@(() => User.Phone)" />
+                <InputText @bind-Value="@_editUsersEmail.Email" />
+                <ValidationMessage For="@(() => _editUsersEmail.Email)" />
             </div>
+            <button type="submit" class="btn btn-success">
+                Добавить
+            </button>
         </div>
-    </div>
-</EditForm>
-    <div class="form-group ">
-        <div>
-            <label>Роль :</label>
-            <div>
-                @User.
-            </div>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-success">
-        Добавить
-    </button>
+    </EditForm>
+}
+else
+{
+    <p><em>@_requestStatus</em></p>
+    
+}

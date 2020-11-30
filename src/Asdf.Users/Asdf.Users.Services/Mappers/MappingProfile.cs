@@ -12,7 +12,9 @@ namespace Asdf.UserDomain.Services.Mappers
         {
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Id, source => source.MapFrom(source => Guid.Parse(source.Id)))
-                .ForMember(dest => dest.Name, source => source.MapFrom(source => source.Name));
+                .ForMember(dest => dest.Name, source => source.MapFrom(source => source.Name))
+                .ForMember(dest => dest.Phone, source => source.MapFrom(source => source.UserName))
+                .ForMember(dest => dest.Email, source => source.MapFrom(source => source.Email));
 
             CreateMap<Role, RoleDto>()
                 .ForMember(dest => dest.Id, source => source.MapFrom(source => Guid.Parse(source.Id)))

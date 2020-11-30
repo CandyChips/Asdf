@@ -8,8 +8,9 @@ namespace Asdf.Users.Models.Entities
     public class User : IdentityUser
     {
         [Required]
-        public bool Deleted { get; set; }
-        [Required]
+        [Column(TypeName="nvarchar(MAX)")]
         public string Name { get; set; }
+        [Required]
+        public bool Deleted { get; set; }
     }
 }

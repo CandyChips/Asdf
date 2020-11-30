@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -26,6 +28,19 @@ namespace Asdf.AdminMenu.Pages.User
             if (result.StatusCode == HttpStatusCode.OK)
                 UriHelper.NavigateTo("user/table");
         }
+    }
+    public class CreateUser
+    {
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public List<string> Roles = new List<string>();
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Password {get;set;}
+        [Required]
+        public string Phone { get; set; }
     }
 
     public class RoleDto
