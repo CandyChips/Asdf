@@ -34,7 +34,7 @@ namespace Asdf.AdminMenu.Pages.User
         [Required]
         public string Name { get; set; }
         [Required]
-        public List<string> Roles = new List<string>();
+        public string Role { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]

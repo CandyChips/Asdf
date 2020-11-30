@@ -139,11 +139,31 @@ namespace Asdf.Users.Api.Controllers
         
         [HttpPut] 
         [AllowAnonymous]
-        [Route("UplateUsersEmail")]
+        [Route("UpdateUsersEmail")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UplateUsersEmailCommand(
             [FromBody]UplateUsersEmailCommand command)
+        {
+            try
+            {
+                var result = await this._mediator.Send(command);
+                return result == false ? (IActionResult) BadRequest() : Ok();
+            }
+            catch(Exception ex)
+            {
+                this._logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
+        
+        [HttpPut] 
+        [AllowAnonymous]
+        [Route("UpdateUsersPhone")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> UplateUsersPhoneCommand(
+            [FromBody]UplateUsersPhoneCommand command)
         {
             try
             {

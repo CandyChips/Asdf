@@ -16,6 +16,8 @@ else
             <tr>
                 <th>Id</th>
                 <th>Имя</th>
+                <th>Почта</th>
+                <th>Номер телефона</th>
                 <th>Редактирование</th>
             </tr>
         </thead>
@@ -25,6 +27,8 @@ else
                 <tr>
                     <td>@user.Id</td>
                     <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Phone</td>
                     <td>
                         <a class="btn btn-success" href="user/edit/@user.Id"><i class="oi oi-plus"></i>Редактировать</a>
                     </td>

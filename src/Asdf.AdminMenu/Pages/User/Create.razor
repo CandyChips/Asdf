@@ -21,9 +21,9 @@
     </div>
     <div class="form-group ">
         <div>
-            <label>Роли :</label>
+            <label>Роль :</label>
             <div>
-                <select bind=@User.Roles multiple="multiple">
+                <InputSelect @bind-Value="@User.Role">
                     @if (Roles != null)
                     {
                         @foreach (var role in Roles)
@@ -35,8 +35,8 @@
                     {
                         <option>Загрузка</option>
                     }
-                </select>
-                <ValidationMessage For="@(() => User.Password)"/>
+                </InputSelect>
+                <ValidationMessage For="@(() => User.Role)"/>
             </div>
         </div>
     </div>

@@ -23,7 +23,8 @@ namespace Asdf.Users.Services.Requests.Queries
             GetAllUsersQuery request,
             CancellationToken cancellationToken)
         {
-            return await this._userService.GetAllUsers().ToListAsync(cancellationToken: cancellationToken);
+            var result = await this._userService.GetAllUsers().ToListAsync(cancellationToken: cancellationToken);
+            return result;
         }
     }
 }
