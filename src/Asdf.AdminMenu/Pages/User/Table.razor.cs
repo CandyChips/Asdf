@@ -19,7 +19,7 @@ namespace Asdf.AdminMenu.Pages.User
 
         protected async Task LoadData()
         {
-            var result = await Http.GetAsync("https://localhost:5001/User/GetAllUsers");
+            var result = await Http.GetAsync("https://localhost:5001/api/users/User/GetAllUsers");
             if (result.StatusCode == HttpStatusCode.OK)
             {
                 _users = await result.Content.ReadFromJsonAsync<UserDto[]>();

@@ -1,13 +1,12 @@
 ﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Asdf.Users.Api": {
+    "Asdf.Gateway": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5112",
+      "applicationUrl": "http://localhost:5000;https://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
-  }
+  } 
 }
