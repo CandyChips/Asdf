@@ -1,0 +1,42 @@
+﻿@page "/user/table"
+
+<h1>Users</h1>
+<div class="form-group">
+    <a class="btn btn-success" href="user/create"><i class="oi oi-plus"></i>Создать</a>
+</div>
+<br>
+@if (_users == null)
+{
+    <p><em>@_requestStatus</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Имя</th>
+                <th>Почта</th>
+                <th>Номер телефона</th>
+                <th>Редактирование</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in _users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Phone</td>
+                    <td>
+                        <a class="btn btn-success" href="user/edit/@user.Id"><i class="oi oi-plus"></i>Редактировать</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+}

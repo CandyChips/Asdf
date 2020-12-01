@@ -1,0 +1,61 @@
+﻿@page "/user/edit/{RouteId}"
+
+<h3>Редактирование пользователя @RouteId</h3>
+@if (_requestStatus == "")
+{
+    <br>
+    <EditForm Model="@_editUsersName" OnValidSubmit="@UpdateUsersName">
+        <DataAnnotationsValidator />
+        <div class="form-group" style="display: ruby">
+            <label>Имя :</label>
+            <div>
+                <InputText @bind-Value="@_editUsersName.Name" />
+                <ValidationMessage For="@(() => _editUsersName.Name)" />
+            </div>
+            <button 
+                type="submit" 
+                class="btn btn-success" 
+                disabled="@(_editUsersName.Name == _editableUser.Name)">
+                Добавить
+            </button>
+        </div>
+    </EditForm>
+    <br>
+    <EditForm Model="@_editUsersEmail" OnValidSubmit="@UpdateUsersEmail">
+        <DataAnnotationsValidator />
+        <div class="form-group" style="display: ruby">
+            <label>Почта :</label>
+            <div>
+                <InputText @bind-Value="@_editUsersEmail.Email" />
+                <ValidationMessage For="@(() => _editUsersEmail.Email)" />
+            </div>
+            <button 
+                type="submit" 
+                class="btn btn-success" 
+                disabled="@(_editUsersEmail.Email == _editableUser.Email)">
+                Добавить
+            </button>
+        </div>
+    </EditForm>
+    <br>
+    <EditForm Model="@_editUsersPhone" OnValidSubmit="@UpdateUsersPhone">
+        <DataAnnotationsValidator />
+        <div class="form-group" style="display: ruby">
+            <label>Номер телефона :</label>
+            <div>
+                <InputText @bind-Value="@_editUsersPhone.Phone" />
+                <ValidationMessage For="@(() => _editUsersPhone.Phone)" />
+            </div>
+            <button 
+                type="submit" 
+                class="btn btn-success" 
+                disabled="@(_editUsersPhone.Phone == _editableUser.Phone)">
+                Добавить
+            </button>
+        </div>
+    </EditForm>
+}
+else
+{
+    <p><em>@_requestStatus</em></p>
+}
