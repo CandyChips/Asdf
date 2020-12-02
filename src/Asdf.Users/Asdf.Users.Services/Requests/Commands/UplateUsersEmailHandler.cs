@@ -10,22 +10,22 @@ namespace Asdf.UserDomain.Services.Requests.Commands
     public class UplateUsersEmailHandler
         : IRequestHandler<UplateUsersEmailCommand, bool>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly UserManager<User> _userManager;
 
         public UplateUsersEmailHandler(
-            IUserRepository userRepository)
+            UserManager<User> userManager)
         {
-            this._userRepository = userRepository;
+            _userManager = userManager;
         }
 
         public async Task<bool> Handle(
             UplateUsersEmailCommand request, 
             CancellationToken cancellationToken)
         {
-            var user = await this._userRepository.GetUserByIdAsync(request.Id);
-            user.EmailConfirmed = false;
-            user.Email = request.Email;
-            this._userRepository.UpdateUserAsync(user);
+            var user = await this._userManager.FindByIdAsync(request.Id.ToString());
+            var result = await this._userManager.SetEmailAsync(user, request.Email);
+            if (result.Succeeded == false)
+                return false;
             return true;
         }
     }

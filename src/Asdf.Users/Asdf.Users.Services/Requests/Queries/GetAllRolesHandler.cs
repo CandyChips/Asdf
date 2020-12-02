@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Asdf.Users.Models.Entities;
 using Asdf.Users.Services.Repositories.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Asdf.Users.Services.Requests.Queries
@@ -11,19 +12,18 @@ namespace Asdf.Users.Services.Requests.Queries
     public class GetAllRolesHandler 
         : IRequestHandler<GetAllRolesQuery, List<Role>>
     {
-        private readonly IUserRepository _userService;
+        private readonly RoleManager<Role> _roleManager;
 
-        public GetAllRolesHandler(
-            IUserRepository userService)
+        public GetAllRolesHandler(RoleManager<Role> roleManager)
         {
-            _userService = userService;
+            _roleManager = roleManager;
         }
 
         public async Task<List<Role>> Handle(
             GetAllRolesQuery request, 
             CancellationToken cancellationToken)
         {
-            return await this._userService.GetAllRoles().ToListAsync(cancellationToken: cancellationToken);
+            return await this._roleManager.Roles.ToListAsync();
         }
     }
 }
