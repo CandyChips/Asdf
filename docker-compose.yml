@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  asdf.users.api:
+    image: ${DOCKER_REGISTRY-}asdfusersapi
+    build:
+      context: .
+      dockerfile: src\Asdf.Users\Asdf.Users.Api\Dockerfile
+
+  asdf.gateway:
+    image: ${DOCKER_REGISTRY-}asdfgateway
+    build:
+      context: .
+      dockerfile: src\Asdf.Gateway\Dockerfile
+
