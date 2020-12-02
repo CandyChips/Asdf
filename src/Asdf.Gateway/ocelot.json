@@ -22,7 +22,19 @@
         }
       ],
       "UpstreamPathTemplate": "/api/users/{url}",
-      "UpstreamHttpMethod": [ "GET", "Post", "Put" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5113
+        }
+      ],
+      "UpstreamPathTemplate": "/api/social/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
     }
   ],
   "GlobalConfiguration": {

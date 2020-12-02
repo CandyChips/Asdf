@@ -1,5 +1,16 @@
 ﻿@page "/role/create"
 
 <h3>Добавление новой роли</h3>
-<Form dev="@_dev"
-      OnValidSubmit="@CreateDeveloper" />
+<EditForm Model="@Form" OnValidSubmit="@CreateRole">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Name :</label>
+        <div>
+            <InputText @bind-Value="@Form.Name" />
+            <ValidationMessage For="@(() => Form.Name)" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        Добавить
+    </button>
+</EditForm>

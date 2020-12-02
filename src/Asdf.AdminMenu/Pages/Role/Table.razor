@@ -5,27 +5,28 @@
     <a class="btn btn-success" href="role/create"><i class="oi oi-plus"></i>Создать</a>
 </div>
 <br>
-@if (_roles == null)
-{
-    <p><em>@_requestStatus</em></p>
-}
-else
+@if (_roles != null)
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Название</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Название</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var role in _roles)
-            {
-                <tr>
-                    <td>@role.Id</td>
-                    <td>@role.Name</td>
-                </tr>
-            }
+        @foreach (var role in _roles)
+        {
+            <tr>
+                <td>@role.Id</td>
+                <td>@role.Name</td>
+            </tr>
+        }
         </tbody>
     </table>
+}
+else
+{
+    <p><em>Загрузка...</em></p>
+    
 }

@@ -1,21 +1,21 @@
 ﻿@page "/user/create"
 
 <h3>Добавление нового пользователя</h3>
-<EditForm Model="@User" OnValidSubmit="@CreateUser">
+<EditForm Model="@Form" OnValidSubmit="@CreateUser">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label>Имя :</label>
         <div>
-            <InputText @bind-Value="@User.Name" />
-            <ValidationMessage For="@(() => User.Name)" />
+            <InputText @bind-Value="@Form.Name" />
+            <ValidationMessage For="@(() => Form.Name)" />
         </div>
     </div>
     <div class="form-group ">
         <div>
             <label>Почта :</label>
             <div>
-                <InputText @bind-Value="@User.Email" />
-                <ValidationMessage For="@(() => User.Email)" />
+                <InputText @bind-Value="@Form.Email" />
+                <ValidationMessage For="@(() => Form.Email)" />
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <div>
             <label>Роль :</label>
             <div>
-                <InputSelect @bind-Value="@User.Role">
+                <InputSelect @bind-Value="@Form.Role">
                     @if (Roles != null)
                     {
                         @foreach (var role in Roles)
@@ -36,7 +36,7 @@
                         <option>Загрузка</option>
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => User.Role)"/>
+                <ValidationMessage For="@(() => Form.Role)"/>
             </div>
         </div>
     </div>
@@ -44,8 +44,8 @@
         <div>
             <label>Пароль :</label>
             <div>
-                <InputText @bind-Value="@User.Password" />
-                <ValidationMessage For="@(() => User.Password)" />
+                <InputText @bind-Value="@Form.Password" />
+                <ValidationMessage For="@(() => Form.Password)" />
             </div>
         </div>
     </div>
@@ -53,8 +53,8 @@
         <div>
             <label>Номер телефона :</label>
             <div>
-                <InputText @bind-Value="@User.Phone" />
-                <ValidationMessage For="@(() => User.Phone)" />
+                <InputText @bind-Value="@Form.Phone" />
+                <ValidationMessage For="@(() => Form.Phone)" />
             </div>
         </div>
     </div>

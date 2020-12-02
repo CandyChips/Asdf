@@ -18,8 +18,24 @@ namespace Asdf.Gateway
         public Startup(IConfiguration configuration) { Configuration = configuration; }
         public IConfiguration Configuration { get; }
         
-        public void ConfigureServices(IServiceCollection services) { services.AddOcelot(Configuration); }
+        public void ConfigureServices(IServiceCollection services) 
+        { 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyHeader());
+            });
+            services.AddOcelot(Configuration); 
+        }
 
-        public async void Configure(IApplicationBuilder app) => await app.UseOcelot();
+        public async void Configure(IApplicationBuilder app)
+        {
+            app.UseCors("CorsPolicy");
+            await app.UseOcelot();
+        }
     }
 }

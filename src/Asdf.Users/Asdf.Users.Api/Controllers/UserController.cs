@@ -172,7 +172,7 @@ namespace Asdf.Users.Api.Controllers
             try
             {
                 var result = await this._mediator.Send(command);
-                return result == false ? (IActionResult) BadRequest() : Ok();
+                 return result == false ? (IActionResult) BadRequest() : Ok();
             }
             catch(Exception ex)
             {
