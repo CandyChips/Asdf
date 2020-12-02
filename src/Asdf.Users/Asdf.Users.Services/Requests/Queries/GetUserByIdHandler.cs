@@ -4,25 +4,26 @@ using System.Threading.Tasks;
 using Asdf.Users.Models.Entities;
 using Asdf.Users.Services.Repositories.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace Asdf.Users.Services.Requests.Queries
 {
     class GetUserByIdHandler 
         : IRequestHandler<GetUserByIdQuery, User>
     {
-        private IUserRepository _userRepository;
+        private readonly UserManager<User> _userManager;
 
         public GetUserByIdHandler(
-            IUserRepository userRepository)
+            UserManager<User> userManager)
         {
-            _userRepository = userRepository;
+            _userManager = userManager;
         }
 
         public async Task<User> Handle(
             GetUserByIdQuery request, 
             CancellationToken cancellationToken)
         {
-            return await this._userRepository.GetUserByIdAsync(request.Id);
+            return await this._userManager.FindByIdAsync(request.Id.ToString());
         }
     }
 }
