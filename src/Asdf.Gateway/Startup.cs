@@ -18,8 +18,19 @@ namespace Asdf.Gateway
         public Startup(IConfiguration configuration) { Configuration = configuration; }
         public IConfiguration Configuration { get; }
         
-        public void ConfigureServices(IServiceCollection services) { services.AddOcelot(Configuration); }
+        public void ConfigureServices(IServiceCollection services) 
+        { 
+            services.AddOcelot(Configuration);
+            services.AddSwaggerForOcelot(Configuration);
+        }
 
-        public async void Configure(IApplicationBuilder app) => await app.UseOcelot();
+        public async void Configure(IApplicationBuilder app)
+        {
+            app.UseSwaggerForOcelotUI(opt =>
+            {
+                opt.PathToSwaggerGenerator = "/swagger/docs";
+            });
+            await app.UseOcelot();
+        }
     }
 }
