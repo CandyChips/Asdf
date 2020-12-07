@@ -10,6 +10,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Asdf.Social.Agregates\Asdf.Social.Agregates.csproj" />
+    <ProjectReference Include="..\Asdf.Social.Services\Asdf.Social.Services.csproj" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

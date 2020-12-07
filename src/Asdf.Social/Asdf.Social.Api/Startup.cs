@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Akka.Actor;
+using Asdf.Social.Api.Commands;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using IApplicationLifetime = Microsoft.AspNetCore.Hosting.IApplicationLifetime;
 
 namespace Asdf.Social.Api
 {
@@ -17,11 +16,13 @@ namespace Asdf.Social.Api
         {
             Configuration = configuration;
         }
-        public IConfiguration Configuration { get; }
+
+        private IConfiguration Configuration { get; }
         
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -31,10 +32,29 @@ namespace Asdf.Social.Api
                         .SetIsOriginAllowed((host) => true)
                         .AllowAnyHeader());
             });
+            
+            services.AddSingleton(provider =>
+            {
+                var serviceScopeFactory = provider.GetService<IServiceScopeFactory>();
+                var actorSystem = ActorSystem.Create("AsdfSocialActorSystem", ConfigurationLoader.Load());
+                actorSystem.AddServiceScopeFactory(serviceScopeFactory);
+                return actorSystem;
+            });
+            
+            services.AddSingleton<CreateSocialProfileActorProvider>(provider =>
+            {
+                var actorSystem = provider.GetService<ActorSystem>();
+                var booksManagerActor = actorSystem.ActorOf(Props.Create(() => new CreateSocialProfileActor()));
+                return () => booksManagerActor;
+            });
+            
             services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env, 
+            IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +71,16 @@ namespace Asdf.Social.Api
             app.UseSwaggerUI(c => 
             { 
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Nano35 service API");
+            });
+            
+            lifetime.ApplicationStarted.Register(() =>
+            {
+                app.ApplicationServices.GetService<ActorSystem>(); // start Akka.NET
+            });
+            
+            lifetime.ApplicationStopping.Register(() =>
+            {
+                app.ApplicationServices.GetService<ActorSystem>().Terminate().Wait();
             });
         }
     }
