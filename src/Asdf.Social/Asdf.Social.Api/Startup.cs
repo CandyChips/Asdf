@@ -1,8 +1,10 @@
 using Akka.Actor;
 using Asdf.Social.Api.Commands;
+using Asdf.Social.Services.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +23,9 @@ namespace Asdf.Social.Api
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("AsdfSocialDB")));
+            
             services.AddControllers();
 
             services.AddCors(options =>
@@ -32,6 +37,8 @@ namespace Asdf.Social.Api
                         .SetIsOriginAllowed((host) => true)
                         .AllowAnyHeader());
             });
+            
+            services.AddScoped<IDataAccelerator, EntityFrameworkAccelerator>();
             
             services.AddSingleton(provider =>
             {

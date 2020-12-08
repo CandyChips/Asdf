@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Asdf.Social.Services.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,18 @@ namespace Asdf.Social.Api
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
-                //var ServiceName = services.GetRequiredService<ServiceType>();
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var tmp = services.GetService<IDataAccelerator>();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the DB.");
+                    throw ex;
+                }
             }
             host.Run();
         }

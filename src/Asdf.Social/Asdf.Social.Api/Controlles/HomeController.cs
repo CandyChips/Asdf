@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Asdf.Social.Api.Commands;
@@ -27,11 +28,17 @@ namespace Asdf.Social.Api.Controlles
         
         [HttpPost]
         [Route("CastActor")]
-        public ActionResult<string> CastActor(
-            [FromBody] CreateSocialProfileActor.CreateSocialProfile command)
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<string>), (int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult> CastActor(
+            [FromBody] CreateSocialProfileActor.Command command, 
+            [FromHeader(Name = "x-requestid")] Guid requestId)
         {
-            this._createSocialProfileActor.Tell(command);
-            return Accepted();
+            command.NewId = Guid.NewGuid();
+            var result = await this._createSocialProfileActor.Ask<CreateSocialProfileActor.Result>(command);
+            return result.Errors.Any() ? (ActionResult) 
+                BadRequest(result.Errors) : 
+                Ok(result.Id);
         }
 
         // GET api/<HomeController>/5
